@@ -54,6 +54,7 @@ export const site = {
   contact: {
     email: "yogaclub@example.org", // PLACEHOLDER
     phone: "", // PLACEHOLDER — leave empty to hide
+    whatsapp: "", // PLACEHOLDER — digits with country code, e.g. "919876543210"; leave empty to hide the link
     address: "Venue to be confirmed, SRIHER campus, Porur, Chennai", // PLACEHOLDER
   },
   social: [
