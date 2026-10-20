@@ -8,7 +8,7 @@ import { cn } from "@/lib/cn";
 
 type Values = {
   name: string;
-  role: "" | "Student" | "Faculty / staff" | "Public visitor";
+  role: "" | "SRIHER student";
   department: string;
   email: string;
   phone: string;
@@ -25,6 +25,9 @@ type Status =
   | { kind: "error"; message: string }
   | { kind: "offline" };
 
+/** Membership is limited to SRIHER students, verified by an institutional email domain. */
+const SRIHER_EMAIL = /^[^\s@]+@([a-z0-9-]+\.)*(sriramachandra|sriher)\.edu\.in$/i;
+
 const endpoint = process.env.NEXT_PUBLIC_JOIN_ENDPOINT;
 
 const purposeLabel = {
@@ -33,7 +36,7 @@ const purposeLabel = {
   enquiry: "General enquiry",
 } as const;
 const purposeHint = {
-  membership: "For the SRIHER community. Eligibility is confirmed by the club.",
+  membership: "SRIHER students only. Use your SRIHER college email.",
   events: "Hear about upcoming sessions.",
   enquiry: "Questions, collaborations or media.",
 };
@@ -41,11 +44,11 @@ const purposeHint = {
 function validate(v: Values): Errors {
   const e: Errors = {};
   if (v.name.trim().length < 2) e.name = "Please enter your full name.";
-  if (!v.role) e.role = "Please tell us whether you are a student, faculty / staff or a public visitor.";
+  if (!v.role) e.role = "Please confirm you are a SRIHER student.";
   if (!v.purpose) e.purpose = "Please choose what you would like to do.";
   if (!v.department.trim()) e.department = "Please enter your department or institution.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email.trim())) e.email = "Enter a valid email address, like name@example.com.";
-  if (v.phone && !/^\+?[\d\s-]{8,15}$/.test(v.phone.trim())) e.phone = "Enter a valid phone number, or leave it blank.";
+  if (!SRIHER_EMAIL.test(v.email.trim())) e.email = "Use your SRIHER college email (ending in @sriramachandra.edu.in or @sriher.edu.in). Personal emails and other colleges can't join.";
+  if (!/^\+?[\d\s-]{8,15}$/.test(v.phone.trim())) e.phone = "Enter a valid contact number (8–15 digits).";
   return e;
 }
 
@@ -100,7 +103,7 @@ export function JoinForm() {
   };
 
   const mailto = `mailto:${site.contact.email}?subject=${encodeURIComponent("SRIHER Yoga Club — enquiry")}&body=${encodeURIComponent(
-    `Purpose: ${purposeLabel[values.purpose as keyof typeof purposeLabel] ?? ""}\nName: ${values.name}\nI am: ${values.role}\nDepartment / institution: ${values.department}\nEmail: ${values.email}\nPhone: ${values.phone || "—"}\nMessage: ${values.message || "—"}`,
+    `Purpose: ${purposeLabel[values.purpose as keyof typeof purposeLabel] ?? ""}\nName: ${values.name}\nI am: ${values.role}\nDepartment: ${values.department}\nEmail: ${values.email}\nPhone: ${values.phone}\nMessage: ${values.message || "—"}`,
   )}`;
 
   const errorList = Object.entries(errors) as [keyof Values, string][];
@@ -170,10 +173,10 @@ export function JoinForm() {
 
         <fieldset className="sm:col-span-2" aria-describedby={describe("role")}>
           <legend className="text-sm font-bold text-ink">
-            Designation <span aria-hidden className="text-ember">*</span>
+            Eligibility <span aria-hidden className="text-ember">*</span>
           </legend>
-          <div className="mt-2 grid gap-3 sm:grid-cols-3">
-            {(["Student", "Faculty / staff", "Public visitor"] as const).map((r) => (
+          <div className="mt-2 grid gap-3 sm:grid-cols-1">
+            {(["SRIHER student"] as const).map((r) => (
               <label
                 key={r}
                 className={cn(
@@ -182,7 +185,7 @@ export function JoinForm() {
                 )}
               >
                 <input
-                  id={id(`role-${r.replace(/\W+/g, "-")}`)}
+                  id={id("role-Student")}
                   type="radio"
                   name="role"
                   value={r}
@@ -231,7 +234,7 @@ export function JoinForm() {
 
         <div>
           <label htmlFor={id("department")} className="text-sm font-bold text-ink">
-            Department or institution <span aria-hidden className="text-ember">*</span>
+            Department <span aria-hidden className="text-ember">*</span>
           </label>
           <input
             id={id("department")}
@@ -243,13 +246,13 @@ export function JoinForm() {
             aria-describedby={describe("department", "hint")}
             className={cn(fieldBase, errors.department ? "border-[#b00020]" : "border-line")}
           />
-          <p id={id("department-hint")} className="mt-1.5 text-xs text-ink-soft">e.g. Physiotherapy (SRIHER), or your college / organisation</p>
+          <p id={id("department-hint")} className="mt-1.5 text-xs text-ink-soft">e.g. Physiotherapy, MBBS, Nursing, Dental</p>
           <Err k="department" />
         </div>
 
         <div>
           <label htmlFor={id("email")} className="text-sm font-bold text-ink">
-            Email <span aria-hidden className="text-ember">*</span>
+            SRIHER college email <span aria-hidden className="text-ember">*</span>
           </label>
           <input
             id={id("email")}
@@ -260,21 +263,23 @@ export function JoinForm() {
             value={values.email}
             onChange={(e) => set("email", e.target.value)}
             aria-invalid={Boolean(errors.email)}
-            aria-describedby={describe("email")}
+            aria-describedby={describe("email", "hint")}
             className={cn(fieldBase, errors.email ? "border-[#b00020]" : "border-line")}
           />
+          <p id={id("email-hint")} className="mt-1.5 text-xs text-ink-soft">Must end in @sriramachandra.edu.in or @sriher.edu.in</p>
           <Err k="email" />
         </div>
 
         <div className="sm:col-span-2">
           <label htmlFor={id("phone")} className="text-sm font-bold text-ink">
-            Contact number <span className="font-normal text-ink-soft">(optional)</span>
+            Contact number <span aria-hidden className="text-ember">*</span>
           </label>
           <input
             id={id("phone")}
             type="tel"
             inputMode="tel"
             autoComplete="tel"
+            required
             value={values.phone}
             onChange={(e) => set("phone", e.target.value)}
             aria-invalid={Boolean(errors.phone)}

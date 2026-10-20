@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { JoinForm } from "@/components/sections/JoinForm";
 import { PageHero } from "@/components/sections/PageHero";
 import { Pending } from "@/components/ui/Pending";
@@ -11,7 +11,7 @@ import { breadcrumbLd, ids, pageMetadata, webPageLd } from "@/lib/seo";
 
 const title = "Contact & Join the Club";
 const description =
-  "Contact SRIHER Yoga Club or register your interest: students, faculty and visitors at Sri Ramachandra Institute, Porur, Chennai. No experience needed.";
+  "Contact SRIHER Yoga Club or register your interest: open to SRIHER students only (SRIHER college email required), Porur, Chennai. No experience needed.";
 
 export const metadata: Metadata = pageMetadata({
   title,
@@ -46,7 +46,7 @@ export default function ContactPage() {
             <em className="text-gradient-sun font-medium">Your practice begins here</em>
           </>
         }
-        intro="Whether you are a student, faculty member or a visitor curious about yoga, we would love to hear from you."
+        intro="The club is exclusively for SRIHER students. To join, use your SRIHER college email (@sriramachandra.edu.in or @sriher.edu.in); outsiders and students of other colleges cannot join."
       />
 
       <section id="join" aria-labelledby="join-title" className="bg-sunrise scroll-mt-28 py-20 md:py-28">
@@ -55,7 +55,7 @@ export default function ContactPage() {
             <SectionHeading
               eyebrow="Join the club"
               title={<span id="join-title">Get in touch or join</span>}
-              intro="Club membership is for the SRIHER community. Anyone can ask about open events or send a general enquiry. No prior experience needed."
+              intro="Open to SRIHER students only. You must use your SRIHER college email (@sriramachandra.edu.in or @sriher.edu.in); outsiders and students of other colleges cannot join. No prior experience needed."
             />
             <Reveal delay={0.1} className="mt-10 space-y-4">
               <div className="glass flex gap-4 rounded-2xl p-5">
@@ -74,6 +74,24 @@ export default function ContactPage() {
                   <p className="text-xs font-bold uppercase tracking-[0.16em] text-ember">Phone</p>
                   {site.contact.phone ? (
                     <a href={`tel:${site.contact.phone}`} className="mt-1 block text-ink hover:text-maroon">{site.contact.phone}</a>
+                  ) : (
+                    <Pending className="mt-2">To be announced</Pending>
+                  )}
+                </div>
+              </div>
+              <div className="glass flex gap-4 rounded-2xl p-5">
+                <MessageCircle className="mt-0.5 size-5 shrink-0 text-sunset" aria-hidden />
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-ember">WhatsApp</p>
+                  {site.contact.whatsapp ? (
+                    <a
+                      href={`https://wa.me/${site.contact.whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 flex min-h-11 w-fit items-center text-ink hover:text-maroon"
+                    >
+                      +{site.contact.whatsapp}
+                    </a>
                   ) : (
                     <Pending className="mt-2">To be announced</Pending>
                   )}

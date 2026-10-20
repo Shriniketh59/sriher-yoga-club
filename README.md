@@ -1,12 +1,52 @@
-# SRIHER Yoga Club — Website
+# SRIHER Yoga Club — Official Website
 
-Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Motion · Lucide.
+> Website of the **SRIHER Yoga Club**, the yoga, pranayama and meditation community of
+> **Sri Ramachandra Institute of Higher Education and Research (SRIHER)**, Porur, Chennai, Tamil Nadu, India.
+> Guided practice and evidence-informed wellbeing for students, faculty and staff.
+
+[![Next.js 15](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org)
+[![React 19](https://img.shields.io/badge/React-19-61dafb)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://www.typescriptlang.org)
+[![Tailwind CSS 4](https://img.shields.io/badge/Tailwind-4-38bdf8)](https://tailwindcss.com)
+
+**Keywords:** SRIHER Yoga Club · Sri Ramachandra yoga club · yoga club Chennai · yoga in Porur ·
+college yoga club Chennai · pranayama · meditation · mindfulness · student wellbeing · International Day of Yoga
+
+## What is this?
+
+A fast, mobile-first, SEO-optimised Next.js site that tells visitors what yoga is (meaning, history,
+Patanjali's eight limbs, research), introduces the club's team, and lets people join or get in touch.
+All content is plain TypeScript data in `/data`, so non-developers can update it without touching components.
+
+## Screenshots
+
+| Home | About | Team | Contact |
+| --- | --- | --- | --- |
+| ![SRIHER Yoga Club home page on desktop](docs/screenshots/desktop-home-top.jpg) | ![About yoga page on desktop](docs/screenshots/desktop-about-top.jpg) | ![Team directory on desktop](docs/screenshots/desktop-team-top.jpg) | ![Contact and join form on desktop](docs/screenshots/desktop-contact-top.jpg) |
+
+**Mobile**
+
+| Home | About | Team | Contact |
+| --- | --- | --- | --- |
+| ![SRIHER Yoga Club home page on mobile](docs/screenshots/mobile-home-top.jpg) | ![About yoga page on mobile](docs/screenshots/mobile-about-top.jpg) | ![Team directory on mobile](docs/screenshots/mobile-team-top.jpg) | ![Contact and join form on mobile](docs/screenshots/mobile-contact-top.jpg) |
+
+Full-page captures for every page and breakpoint are in [`docs/screenshots/`](docs/screenshots).
+
+## Tech stack
+
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Motion · Lucide icons.
+
+## Quick start
 
 ```bash
+git clone https://github.com/Shriniketh59/sriher-yoga-club.git
+cd sriher-yoga-club
 npm install
 npm run dev        # http://localhost:3000
 npm run build && npm start
 ```
+
+Other scripts: `npm run lint`, `npm run typecheck`.
 
 ## Pages
 

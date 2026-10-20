@@ -1,0 +1,12 @@
+# SRIHER Yoga Club
+
+> Official website of the SRIHER Yoga Club, the yoga, pranayama and meditation community of Sri Ramachandra Institute of Higher Education and Research (SRIHER), Porur, Chennai, Tamil Nadu, India. Serves students, faculty and staff.
+
+## Pages
+- [Home](/): club overview, programs, philosophy, join call-to-action
+- [About](/about): what yoga means, history, Patanjali's eight limbs, research evidence, club vision and mission
+- [Team](/team): board and coordinator directory
+- [Contact](/contact): contact details and the "Join the Club" form
+
+## Source
+- [GitHub repository](https://github.com/Shriniketh59/sriher-yoga-club): Next.js 15, React 19, TypeScript, Tailwind CSS 4
