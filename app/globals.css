@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   SRIHER Yoga Club — "Saffron Glass" design tokens
+   Saturated saffron / gold / maroon from the official logo, frosted
+   glass surfaces over soft colour orbs. No faded photo overlays:
+   text over imagery always sits on a glass or solid panel.
+   Small accent text uses `ember` (passes WCAG AA on the light ground).
+------------------------------------------------------------------- */
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-accent: var(--font-instrument), ui-serif, Georgia, serif;
+}
+
+@theme {
+  /* SRIHER Yoga Club brand palette, matched to the official logo */
+  --color-white: #ffffff;
+  --color-ivory: #fff7ed;
+  --color-cream: #fffaf4;
+  --color-sunset: #e86a23;    /* Sunset Orange: decorative accents, large display text */
+  --color-golden: #f49b32;    /* Golden Orange */
+  --color-gold: #f5b544;      /* Warm Gold */
+  --color-saffron: #c2531c;   /* Sunset Orange, deepened for buttons/text so white & small text pass AA */
+  --color-maroon: #68140e;    /* Deep Maroon: headings, primary buttons */
+  --color-maroon-soft: #8a2a1c;
+  --color-plum: #2a0d10;
+  --color-ember: #a2421a;     /* small orange labels on white (AA) */
+  --color-rust: #b9471b;
+  --color-ink: #241b19;       /* Primary text */
+  --color-ink-soft: #766a65;  /* Secondary text */
+  --color-line: #f1e2d3;
+
+  --shadow-glass: 0 24px 60px -28px rgb(107 20 16 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.95);
+  --shadow-lift: 0 40px 80px -40px rgb(107 20 16 / 0.55);
+
+  --ease-zen: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-saffron);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-accent);
+    font-weight: 600;
+    color: var(--color-maroon);
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  p { text-wrap: pretty; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  /* Frosted glass surfaces */
+  .glass {
+    background: rgb(255 255 255 / 0.72);
+    backdrop-filter: blur(18px) saturate(1.5);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+    border: 1px solid rgb(255 255 255 / 0.9);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 24px 60px -32px rgb(104 20 14 / 0.28);
+  }
+  .glass-dark {
+    background: rgb(255 255 255 / 0.09);
+    backdrop-filter: blur(22px) saturate(1.6);
+    -webkit-backdrop-filter: blur(22px) saturate(1.6);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ember);
+  }
+
+  /* Accent word inside a heading: brand colour, same typeface */
+  .accent,
+  .text-gradient-sun {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-rust);
+  }
+
+  .container-zen {
+    width: 100%;
+    max-width: 82.5rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) { .container-zen { padding-inline: 1.5rem; } }
+
+  .prose-zen p + p { margin-top: 1.1em; }
+  .prose-zen p { line-height: 1.75; color: var(--color-ink-soft); }
+}
+
+/* Kept as a no-op so existing section classes stay valid: the colour now
+   comes from the page-wide orbs behind everything. */
+.bg-sunrise {
+  background:
+    radial-gradient(60rem 28rem at 90% 0%, rgb(245 181 68 / 0.16), transparent 65%),
+    radial-gradient(48rem 26rem at 0% 100%, rgb(232 106 35 / 0.08), transparent 65%),
+    #ffffff;
+}
+
+/* Soft colour orbs behind the glass. Solid colours, blurred. */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  pointer-events: none;
+}
