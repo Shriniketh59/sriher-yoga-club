@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Photo } from "@/data/images";
 import { cn } from "@/lib/cn";
 
@@ -30,17 +30,27 @@ export function ParallaxImage({
 }: ParallaxImageProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  // Scroll-linked transforms are costly on phones; only enable on larger, fine-pointer screens.
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px) and (pointer: fine)");
+    const update = () => setEnabled(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [`-${strength}%`, `${strength}%`]);
 
   return (
     <div ref={ref} className={cn("overflow-hidden", !className?.includes("absolute") && "relative", className)}>
-      <motion.div className="absolute inset-[-12%_0]" style={reduce ? undefined : { y }}>
+      <motion.div className="absolute inset-[-12%_0]" style={reduce || !enabled ? undefined : { y }}>
         <Image
           src={photo.src}
           alt={photo.alt}
           fill
           priority={priority}
+          fetchPriority={priority ? "high" : undefined}
           sizes={sizes}
           quality={75}
           className={cn("object-cover", imgClassName)}

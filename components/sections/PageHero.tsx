@@ -35,17 +35,18 @@ export function PageHero({ photo, eyebrow, title, intro, children, size = "page"
           </>
         )}
         <div className="flex w-full flex-wrap items-end gap-4">
-          <Reveal className="glass min-w-0 flex-[999_1_34rem] rounded-[1.6rem] !bg-white/85 p-6 sm:rounded-[2rem] sm:p-9">
+          {/* CSS-only entrance: the H1 is the LCP element and must not wait for JS. */}
+          <div className="rise glass min-w-0 flex-[999_1_34rem] rounded-[1.6rem] !bg-white/85 p-6 sm:rounded-[2rem] sm:p-9">
             {eyebrow && (
-              <span className="inline-flex items-center gap-2 rounded-full bg-ink px-3.5 py-2 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-white">
+              <span className="inline-flex items-center gap-2 rounded-full bg-ink px-3.5 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white">
                 <span aria-hidden className="size-2 rounded-full bg-saffron" />
                 {eyebrow}
               </span>
             )}
-            <h1 className="mt-5 text-[2.6rem] leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[4.9rem]">{title}</h1>
+            <h1 className="mt-5 text-[2.35rem] leading-[1] min-[380px]:text-[2.6rem] min-[380px]:leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-[4.9rem]">{title}</h1>
             {intro && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">{intro}</p>}
             {children && <div className="mt-7 flex flex-wrap gap-3">{children}</div>}
-          </Reveal>
+          </div>
           {aside && <Reveal delay={0.1} className="min-w-0 flex-[1_1_17rem]">{aside}</Reveal>}
         </div>
       </div>

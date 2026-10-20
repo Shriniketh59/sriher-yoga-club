@@ -20,7 +20,7 @@ export function MemberCard({ member, band = "bg-saffron" }: { member: TeamMember
         {member.photo ? (
           <Image
             src={member.photo}
-            alt={`Portrait of ${member.name}`}
+            alt={`${member.name}, ${member.clubRole} of SRIHER Yoga Club`}
             fill
             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
             className="object-cover object-top transition-transform duration-[1.2s] ease-zen group-hover:scale-[1.04]"
@@ -28,7 +28,7 @@ export function MemberCard({ member, band = "bg-saffron" }: { member: TeamMember
         ) : (
           <span className="grid h-full place-items-center text-6xl font-extrabold text-ink">{initials(member.name)}</span>
         )}
-        <span className="absolute left-3 top-3 rounded-full bg-ink px-3.5 py-1.5 text-[0.68rem] font-extrabold uppercase tracking-[0.1em] text-white">
+        <span className="absolute left-3 top-3 rounded-full bg-ink px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-[0.08em] text-white">
           {member.clubRole}
         </span>
       </div>
@@ -36,7 +36,7 @@ export function MemberCard({ member, band = "bg-saffron" }: { member: TeamMember
         <h3 className="text-[1.5rem] leading-snug">{member.name}</h3>
         <p className="mt-1 text-sm leading-relaxed text-ink-soft">{member.department}</p>
         {member.link && (
-          <a href={member.link.href} target="_blank" rel="noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-ember hover:text-ink">
+          <a href={member.link.href} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-ember hover:text-ink">
             {member.link.label} <ArrowUpRight className="size-4" aria-hidden />
           </a>
         )}

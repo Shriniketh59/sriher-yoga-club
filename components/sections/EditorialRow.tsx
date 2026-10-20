@@ -13,14 +13,17 @@ type EditorialRowProps = {
   children: ReactNode;
   aside?: ReactNode;
   id?: string;
+  /** Use "h2" when the row is the section's own heading. */
+  headingAs?: "h2" | "h3";
+  headingId?: string;
 };
 
 /** Text row with an optional photo. Without a photo it becomes a single glass card. */
-export function EditorialRow({ photo, reverse, index, eyebrow, title, children, aside, id }: EditorialRowProps) {
+export function EditorialRow({ photo, reverse, index, eyebrow, title, children, aside, id, headingAs: H = "h3", headingId }: EditorialRowProps) {
   const text = (
     <Reveal delay={photo ? 0.12 : 0} className={cn("min-w-0", photo && "md:col-span-6", photo && (reverse ? "md:order-1 md:pr-6" : "md:pl-6"))}>
       {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-      <h3 className="mt-3 text-[2rem] leading-[1.05] tracking-[-0.03em] sm:text-[2.6rem]">{title}</h3>
+      <H id={headingId} className="mt-3 text-[2rem] leading-[1.05] tracking-[-0.03em] sm:text-[2.6rem]">{title}</H>
       <div className="prose-zen mt-6 text-[1.05rem]">{children}</div>
       {aside && <div className="mt-8">{aside}</div>}
     </Reveal>
@@ -59,7 +62,7 @@ export function EditorialRow({ photo, reverse, index, eyebrow, title, children, 
 export function InfoPanel({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="glass rounded-[1.5rem] p-5">
-      <p className="inline-flex rounded-full bg-ink px-3 py-1 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-gold">{label}</p>
+      <p className="inline-flex rounded-full bg-ink px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-gold">{label}</p>
       <div className="mt-3 text-[0.95rem] leading-relaxed text-ink">{children}</div>
     </div>
   );

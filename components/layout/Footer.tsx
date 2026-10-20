@@ -8,7 +8,7 @@ import { Logo } from "./Logo";
 export function Footer() {
   const socials = site.social.filter((s) => s.href);
   return (
-    <footer className="container-zen pb-8 pt-24">
+    <footer className="container-zen pb-[max(2rem,env(safe-area-inset-bottom))] pt-24">
       <div className="glass grid gap-10 rounded-[2.5rem] p-8 md:grid-cols-12 md:p-11">
         <div className="md:col-span-5">
           <Logo className="w-[220px]" />
@@ -26,10 +26,10 @@ export function Footer() {
 
         <nav aria-label="Footer" className="md:col-span-3">
           <h2 className="text-xs font-extrabold uppercase tracking-[0.18em] !text-ember">Explore</h2>
-          <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-[0.95rem]">
+          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-1 text-[0.95rem]">
             {nav.map((n) => (
               <li key={n.href}>
-                <Link href={n.href} className="font-medium text-ink-soft transition hover:text-ink">
+                <Link href={n.href} className="inline-flex min-h-11 items-center font-medium text-ink-soft transition hover:text-ink">
                   {n.label}
                 </Link>
               </li>
@@ -46,14 +46,14 @@ export function Footer() {
             </li>
             <li className="flex gap-3">
               <Mail className="mt-0.5 size-4 shrink-0 text-rust" aria-hidden />
-              <a href={`mailto:${site.contact.email}`} className="hover:text-ink">
+              <a href={`mailto:${site.contact.email}`} className="-my-2.5 inline-flex min-h-11 items-center break-all hover:text-ink">
                 {site.contact.email}
               </a>
             </li>
             {site.contact.phone && (
               <li className="flex gap-3">
                 <Phone className="mt-0.5 size-4 shrink-0 text-rust" aria-hidden />
-                <a href={`tel:${site.contact.phone}`} className="hover:text-ink">
+                <a href={`tel:${site.contact.phone}`} className="-my-2.5 inline-flex min-h-11 items-center hover:text-ink">
                   {site.contact.phone}
                 </a>
               </li>
@@ -66,8 +66,8 @@ export function Footer() {
                   key={s.label}
                   href={s.href}
                   target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full bg-ink px-4 py-2 text-xs font-bold text-white transition hover:bg-black"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center rounded-full bg-ink px-4 text-xs font-bold text-white transition hover:bg-black"
                 >
                   {s.label}
                 </a>

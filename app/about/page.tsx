@@ -10,13 +10,21 @@ import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fourK, photos } from "@/data/images";
 import { evidenceLabels, evidenceTopics } from "@/data/research";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { site } from "@/data/site";
+import { breadcrumbLd, pageMetadata, webPageLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About Yoga",
-  description: "The meaning, history and philosophy of yoga, why it matters, what research suggests, and the purpose of SRIHER Yoga Club.",
-  alternates: { canonical: "/about" },
-};
+const title = "About Yoga: Meaning, History & Science";
+const description =
+  "What yoga means, where it comes from, Patanjali's eight limbs, asana, pranayama and dhyana, what research shows, and the mission of SRIHER Yoga Club, Chennai.";
+
+export const metadata: Metadata = pageMetadata({
+  title,
+  description,
+  path: "/about",
+  image: { url: "/og/og-about.jpg", alt: "The art and science of yoga — SRIHER Yoga Club" },
+  keywords: ["what is yoga", "eight limbs of yoga", "Patanjali Yoga Sutras", "benefits of yoga", "yoga research"],
+});
 
 const importance = [
   { icon: Activity, title: "Flexibility & balance", text: "Postures move joints through their range and train steadiness, and can be adapted to most abilities." },
@@ -55,6 +63,12 @@ const objectives = [
 export default function AboutPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          webPageLd({ type: "AboutPage", path: "/about", name: `${title} | ${site.name}`, description, image: "/og/og-about.jpg" }),
+          breadcrumbLd([{ name: "About", path: "/about" }]),
+        ]}
+      />
       {/* A. Hero */}
       <PageHero
         size="full"
@@ -62,13 +76,14 @@ export default function AboutPage() {
         imgClassName="object-[50%_40%]"
         eyebrow="About yoga"
         title={<>The art and science <span className="accent">of yoga</span></>}
-        intro="Discover a timeless practice that brings together movement, breath, awareness and holistic wellbeing."
+        intro="Discover a timeless practice that brings together movement, breath, awareness and holistic wellbeing, and how SRIHER Yoga Club shares it on campus."
       />
 
       {/* B. What is yoga */}
       <section id="what-is-yoga" aria-labelledby="what-title" className="container-zen scroll-mt-28 pt-24 md:pt-32">
-        <h2 id="what-title" className="sr-only">What is yoga?</h2>
         <EditorialRow
+          headingId="what-title"
+          headingAs="h2"
           photo={photos.namasteMat}
           eyebrow="Understanding yoga"
           title={<>What is <span className="accent">yoga?</span></>}

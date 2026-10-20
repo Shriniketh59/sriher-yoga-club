@@ -7,13 +7,17 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fourK, photos } from "@/data/images";
-import { joinHref } from "@/data/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { joinHref, site } from "@/data/site";
+import { pageMetadata, webPageLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+const title = "SRIHER Yoga Club | Yoga & Meditation in Porur, Chennai";
+const description =
+  "Join SRIHER Yoga Club at Sri Ramachandra Institute, Porur, Chennai: guided yoga, pranayama and meditation for students and faculty, for every level.";
+
+export const metadata: Metadata = pageMetadata({ title, description, path: "/", absoluteTitle: true });
 
 const essence = [
   { title: "Mind", text: "Steadier attention and a calmer response to everyday pressure." },
@@ -33,19 +37,23 @@ const benefits = [
 export default function HomePage() {
   return (
     <>
-      {/* A. Cinematic video hero */}
+      <JsonLd data={webPageLd({ path: "/", name: title, description })} />
+
+      {/* A. Cinematic video hero — CSS-only entrance so the LCP text paints without waiting for JS */}
       <VideoHero>
-        <Reveal className="max-w-3xl text-white">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold sm:text-sm">
-            SRIHER Yoga Club <span aria-hidden className="mx-2 text-white/60">|</span> A Journey Towards Holistic Wellbeing
-          </p>
-          <h1 id="hero-title" className="mt-6 text-[2.9rem] leading-[1.02] !text-white sm:text-7xl lg:text-[5.5rem]">
-            Find Your Balance.
-            <br />
-            <span className="italic text-gold">Discover Your Strength.</span>
+        <div className="rise max-w-3xl text-white">
+          <h1 id="hero-title" className="!text-white">
+            <span className="block font-sans text-xs font-semibold not-italic uppercase tracking-[0.16em] text-gold sm:text-sm sm:tracking-[0.22em]">
+              SRIHER Yoga Club <span aria-hidden className="mx-1.5 text-white/60 sm:mx-2">·</span> Porur, Chennai
+            </span>{" "}
+            <span className="mt-5 block text-[2.6rem] leading-[1.04] min-[380px]:text-[2.9rem] sm:mt-6 sm:text-7xl lg:text-[5.5rem]">
+              Find Your Balance.{" "}
+              <br />
+              <span className="italic text-gold">Discover Your Strength.</span>
+            </span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/90 sm:text-xl">
-            Experience the harmony of mind, body and spirit through yoga, mindfulness and holistic wellbeing.
+            Experience the harmony of mind, body and breath through yoga, pranayama and meditation at {site.institution}.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <ButtonLink href="/about" variant="saffron" icon={<ArrowRight className="size-4" aria-hidden />}>
@@ -55,7 +63,7 @@ export default function HomePage() {
               Discover SRIHER Yoga Club
             </ButtonLink>
           </div>
-        </Reveal>
+        </div>
       </VideoHero>
 
       {/* B. Welcome */}
@@ -68,8 +76,8 @@ export default function HomePage() {
             </h2>
             <div className="mt-6 space-y-4 text-lg leading-relaxed text-ink-soft">
               <p>
-                SRIHER Yoga Club is a community within Sri Ramachandra Institute of Higher Education and Research that
-                brings yoga, mindfulness and holistic living into everyday campus life.
+                SRIHER Yoga Club is a community within Sri Ramachandra Institute of Higher Education and Research (SRIHER),
+                Porur, Chennai, that brings yoga, mindfulness and holistic living into everyday campus life.
               </p>
               <p>
                 We offer guided practice, breathwork and meditation for every level, and share clear, evidence-informed
@@ -117,7 +125,7 @@ export default function HomePage() {
                 </div>
               ))}
             </dl>
-            <Link href="/about" className="mt-8 inline-flex items-center gap-2 font-semibold text-maroon hover:text-saffron">
+            <Link href="/about" className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-maroon hover:text-saffron">
               Read more about yoga <ArrowRight className="size-4" aria-hidden />
             </Link>
           </Reveal>
@@ -165,6 +173,9 @@ export default function HomePage() {
             </ButtonLink>
             <ButtonLink href="/about" variant="outline">Learn About Yoga</ButtonLink>
           </div>
+          <Link href="/team" className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-maroon hover:text-saffron">
+            Meet the 2026–27 board <ArrowRight className="size-4" aria-hidden />
+          </Link>
         </Reveal>
       </section>
     </>

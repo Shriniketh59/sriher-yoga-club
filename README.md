@@ -86,3 +86,19 @@ the gallery, filters and lightbox switch on automatically.
 Visitors choose Student / Faculty & staff / Public visitor and what they want
 (join the club / attend events / general enquiry). It includes a privacy notice and a
 hidden anti-spam field. It still needs `NEXT_PUBLIC_JOIN_ENDPOINT` to actually submit.
+
+## SEO & mobile (October 2026)
+
+- **Set the domain:** `NEXT_PUBLIC_SITE_URL=https://your-domain` in the host's env vars. Canonicals,
+  Open Graph, `sitemap.xml`, `robots.txt` and JSON-LD all read it (`data/site.ts`). Until set,
+  links fall back to `example.org` (or the Vercel production domain).
+- **Per-page tags:** `lib/seo.ts` → `pageMetadata()` builds title, description, keywords, canonical,
+  Open Graph and Twitter tags for each page. Share images live in `public/og/` (1200×630).
+- **Structured data:** `Organization` + `WebSite` graph in `app/layout.tsx`; each page adds
+  `WebPage` / `AboutPage` / `ContactPage`, `BreadcrumbList`, and the team page an `ItemList` of `Person`.
+- **Indexing:** previews are `noindex` automatically; set `NEXT_PUBLIC_NOINDEX=true` on staging.
+  Add Search Console / Bing codes via `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` / `NEXT_PUBLIC_BING_SITE_VERIFICATION`.
+- **Mobile performance:** hero headings animate with CSS (no JS wait for LCP), the hero video loads
+  after the page is idle, parallax is off on touch screens, glass blur is lighter on phones,
+  tap targets are ≥44px, safe-area insets are respected and a web app manifest is included.
+- After launch: submit `https://your-domain/sitemap.xml` in Google Search Console.

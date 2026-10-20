@@ -5,35 +5,56 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Pending } from "@/components/ui/Pending";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { site } from "@/data/site";
+import { breadcrumbLd, ids, pageMetadata, webPageLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact & Join",
-  description: "Contact SRIHER Yoga Club and register your interest in joining.",
-  alternates: { canonical: "/contact" },
-};
+const title = "Contact & Join the Club";
+const description =
+  "Contact SRIHER Yoga Club or register your interest: students, faculty and visitors at Sri Ramachandra Institute, Porur, Chennai. No experience needed.";
+
+export const metadata: Metadata = pageMetadata({
+  title,
+  description,
+  path: "/contact",
+  image: { url: "/og/og-contact.jpg", alt: "Join SRIHER Yoga Club — your practice begins here" },
+  keywords: ["join SRIHER Yoga Club", "SRIHER Yoga Club contact", "yoga club registration Chennai"],
+});
 
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          webPageLd({
+            type: "ContactPage",
+            path: "/contact",
+            name: `${title} | ${site.name}`,
+            description,
+            image: "/og/og-contact.jpg",
+            extra: { mainEntity: { "@id": ids.organization } },
+          }),
+          breadcrumbLd([{ name: "Contact", path: "/contact" }]),
+        ]}
+      />
       <PageHero
         eyebrow="Contact & join"
         title={
           <>
-            Your practice
+            Join SRIHER Yoga Club.
             <br />
-            <em className="text-gradient-sun font-medium">begins here</em>
+            <em className="text-gradient-sun font-medium">Your practice begins here</em>
           </>
         }
         intro="Whether you are a student, faculty member or a visitor curious about yoga, we would love to hear from you."
       />
 
-      <section id="join" className="bg-sunrise scroll-mt-28 py-20 md:py-28">
+      <section id="join" aria-labelledby="join-title" className="bg-sunrise scroll-mt-28 py-20 md:py-28">
         <div className="container-zen grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <SectionHeading
               eyebrow="Join the club"
-              title="Get in touch or join"
+              title={<span id="join-title">Get in touch or join</span>}
               intro="Club membership is for the SRIHER community. Anyone can ask about open events or send a general enquiry. No prior experience needed."
             />
             <Reveal delay={0.1} className="mt-10 space-y-4">
@@ -41,7 +62,7 @@ export default function ContactPage() {
                 <Mail className="mt-0.5 size-5 shrink-0 text-sunset" aria-hidden />
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.16em] text-ember">Email</p>
-                  <a href={`mailto:${site.contact.email}`} className="mt-1 block break-all text-ink hover:text-maroon">
+                  <a href={`mailto:${site.contact.email}`} className="mt-1 flex min-h-11 w-fit items-center break-all text-ink hover:text-maroon">
                     {site.contact.email}
                   </a>
                   <Pending className="mt-2">Official address pending</Pending>
